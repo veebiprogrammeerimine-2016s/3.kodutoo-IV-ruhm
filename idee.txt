@@ -1,0 +1,26 @@
+Minu idee on teha veebileht mis oskab ära näidata kuidas sa jõuad järgmise klassi juurde Tallinna Ülikoolis.
+
+
+
+
+
+<H2>Dropdown search beta</H2>
+		
+	<form method='post'>
+		<select name='building'>
+			<option value='a0'>Maja</option>
+			<option value='a1'>Mare</option>
+			<option value='a2'>Astra</option>
+		</select>
+		<select name='floor'>
+			<option value='b0'>Korrus</option>
+			<option value='b1'>2.korrus</option>
+			<option value='b2'>3.korrus</option>
+		</select>
+		<select name='class'>
+			<option value='c0'>Klass</option>
+			<option value='c1'>06</option>
+			<option value='c2'>19</option>
+		</select>
+		<input type="submit" value="Otsi">
+	</form>
