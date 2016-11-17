@@ -362,13 +362,15 @@
 		$html = "<table class='table table-striped table-condensed'>";
 	
 		$html .= "<tr>";
-			$html .= "<th><a href='?q=".$q."&sort=start&order=".$orderId."'>start".$arr."</th>";
+			$html .= "<th><a href='?q=".$q."&sort=start&order=".$orderId."'>Start".$arr."</th>";
 			
-			$html .= "<th><a href='?q=".$q."&sort=finish&order=".$orderId."'>finish".$arr."</th>";
+			$html .= "<th><a href='?q=".$q."&sort=finish&order=".$orderId."'>Finish".$arr."</th>";
 				
-			$html .= "<th><a href='?q=".$q."&sort=kogus&order=".$orderId."'>Kogus".$arr."</th>";
+			$html .= "<th><a href='?q=".$q."&sort=kogus&order=".$orderId."'>Count".$arr."</th>";
 			
 			$html .= "<th>Edit</th>";
+			
+			$html .= "<th>GO</th>";
 
 		$html .= "</tr>";
 		
@@ -379,7 +381,8 @@
 				$html .= "<td>".$p->start."</td>";
 				$html .= "<td>".$p->finish."</td>";
 				$html .= "<td>".$p->count."</td>";
-				$html .= "<td><a href='test.php?start=".$p->start."&finish=".$p->finish."'> nupp</a></td>";
+				$html .= "<td><a href='test.php?start=".$p->start."&finish=".$p->finish."'>ARHIVEERI</a></td>";
+				$html .= "<td><a href='test.php?s=".$p->start."&f=".$p->finish."'>go</a></td>";
  
 			$html .= "</tr>";
 		
@@ -388,6 +391,8 @@
 		$html .= "</table>";
 	
 	echo $html;
+	
+	
 ?>
 	
 <?php include('footer.php');?>
