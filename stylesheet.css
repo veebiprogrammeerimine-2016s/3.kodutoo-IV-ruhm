@@ -1,0 +1,194 @@
+body {
+	background: #efffde;
+	/* Old Browsers */background: -moz-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* FF3.6+ */background: -webkit-gradient(left top, right bottom, color-stop(0%, #efffde), color-stop(70%, #ffffff), color-stop(100%, #ffffff));
+	/* Chrome, Safari4+ */background: -webkit-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* Opera 11.10+ */background: -ms-linear-gradient(-45deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	 /* IE 10+ */background: linear-gradient(135deg, #efffde 0%, #ffffff 70%, #ffffff 100%);
+	/* W3C */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efffde', endColorstr='#ffffff', GradientType=1 );
+	/* IE6-9 fallback on horizontal gradient */
+	letter-spacing: 1px;
+	font-variant: small-caps;
+}
+
+header {
+	background-color: #b5ff66;
+	width: 960px;
+	height: 96px;
+	margin: 25px auto 0px auto;
+	border-radius: 5px;
+	text-align:center;
+}
+
+h1 {
+	padding:25px;
+}
+
+.wrapper {
+	width: 960px;
+	min-height: 800px;
+	background-color: white;
+	margin: 0px auto 0px auto;
+	overflow: auto;
+}
+
+#back {
+	width: 200px;
+	height: 23px;
+	text-align: center;
+	color: #e60000;
+	background-color: #efffde;
+	border-radius: 0px 0px 5px 5px;
+	margin: 0px auto auto 10px;
+	letter-spacing: normal;
+	display: inline-block;
+}
+
+#logout {
+	width: 90px;
+	height: 23px;
+	text-align: center;
+	color: #e60000;
+	background-color: #efffde;
+	border-radius: 0px 0px 5px 5px;
+	margin: 0px 10px auto auto;
+	letter-spacing: normal;
+	display: inline-block;
+	float: right;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	font-weight: bold;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
+}
+
+#delete {
+	color: #e60000;
+}
+
+.boxU {
+	text-align: center;
+	background-color: #efffde;
+	margin: 50px 25px 25px 25px;
+	border-radius: 5px;
+	padding: 25px;
+}
+
+.onOffer {
+	text-align: center;
+	background-color: #efffde;
+	margin: 27px 25px 25px 25px;
+	border-radius: 5px;
+	padding: 25px;
+}
+
+.searchBox {
+	width: 490px;
+	height: 100px;
+	float: left;
+}
+
+.onOffer > p {
+	font-weight: bold;
+}
+
+#myOffers {
+    display: inline-block;
+	width: 250px;
+	height: 50px;
+	float: right;
+	background-color: #b5ff66;
+	border-radius: 5px;
+	padding-top:25px;
+	font-weight: bold;
+}
+
+.onOffer > a:hover {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 18px 0 rgba(0, 0, 0, 0.19);
+}
+
+.boxL {
+	text-align: center;
+	background-color: #efffde;
+	margin: 0px 25px 25px 25px;
+	border-radius: 5px;
+	padding: 25px;
+}
+
+.invitation {
+	text-align: center;
+	padding-left: 200px;
+	padding-right: 200px;
+}
+
+.word {
+	text-align: center;
+	padding-left: 200px;
+	padding-right: 200px;
+}
+
+.search {
+	width: 300px;
+}
+
+.formVariety {
+	width: 150px;
+}
+
+.formLocation {
+	width: 300px;
+}
+
+.formNumber {
+	width: 60px;
+	text-align: right;
+}
+
+table {
+	width: 100%;
+}
+
+th {
+	height: 50px;
+}
+
+tr {
+	background-color: #ffffff;
+	text-align: center;
+	height: 36px;
+}
+
+td {
+	font-variant: normal;
+}
+
+.editButton {
+	display: inline-block;
+	height: 34px;
+	line-height: 34px;
+	padding-left: 5px;
+	padding-right: 5px;
+	text-align: center;
+}
+
+td > a:hover {
+	font-weight: normal;
+	color: #e60000;
+
+}
+
+footer > p {
+	text-align: center;
+	margin-top: 100px;
+	margin-bottom: 50px;
+}
+
+
