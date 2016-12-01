@@ -62,7 +62,7 @@
 		 !empty($_POST["date"])&&
 		 !empty($_POST["location"])
 		 ) {
-			 $Event->saveEvent($Helper->cleanInput($_POST["event"], $_POST["date"], $_POST["location"]));
+			 $Event->saveEvent($Helper->cleanInput($_POST["event"]), $Helper->cleanInput($_POST["date"]), $Helper->cleanInput($_POST["location"]));
 			 
 			 header("Location: data.php");
 			 

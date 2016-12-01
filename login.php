@@ -120,7 +120,7 @@
 			
 			
 			
-		$User->signup($signupEmail, $password, $gender, $_POST["birthdate"]);
+		$User->signup($Helper->cleanInput($_POST["signupEmail"]), $Helper->cleanInput($_POST["signupPassword"]), $Helper->cleanInput($_POST["gender"]), $Helper->cleanInput($_POST["birthdate"]));
 		}
 	$notice = "";
 	//kas kasutaja tahab sisse logida
@@ -130,7 +130,7 @@
 		 !empty($_POST["loginPassword"])
 	
 	) {
-		$notice = $User->login($_POST["loginEmail"], $_POST["loginPassword"]);
+		$notice = $User->login($Helper->cleanInput($_POST["loginEmail"]), $Helper->cleanInput($_POST["loginPassword"]));
 	}
 
  
