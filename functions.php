@@ -62,5 +62,44 @@
 		
 		return $error;
 	}
+	
+	//KASUTAJA TABEL
+	function profile(){
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"], 
+		$GLOBALS["serverUsername"], 
+		$GLOBALS["serverPassword"], 
+		$GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("
+		SELECT id, epost, password, gender, username, avatar
+		FROM 3user_food
+		");
+		
+		$stmt->bind_result($id, $email, $password, $gender, $nickname, $avatar);
+		$stmt->execute();
+		$results = array();
+		
+		while ($stmt->fetch()) {
+			
+			$human = new StdClass();
+			$human->id = $id;
+			$human->email = $email;
+			$human->gender = $gender;
+			$human->nickname = $nickname;
+			$human->avatar = $avatar;
+			
+			array_push($results, $human);	
+		}
+		
+		return $results;
+	}
+	
+	function cleanInput($input) {
+		$input = trim($input);
+		$input = stripslashes($input);
+		$input = htmlspecialchars($input);
+		return $input;
+	}
 
 ?>

@@ -2,6 +2,7 @@
 
 	require("../../config.php");
 	require("functions.php");
+	require("style.php");
 	
 	//SESSION
 	if (isset($_SESSION["userId"]))
@@ -11,7 +12,7 @@
 	
 	//MUUTUJAD REGISTREERIMINE
 	$signupEmail = $signupPassword = $signupUsername = $signupGender = "" ; 
-	$signupEmailError = $signupPasswordError = $signupUsernameError = $signupGenderError = "*";
+	$signupEmailError = $signupPasswordError = $signupUsernameError = $signupGenderError = "";
 	//MUUTUJAD LOOGIMINE
 	$loginEmail = $loginPassword = "";
 	$loginEmailError = $loginPasswordError = $error = "";
@@ -20,7 +21,7 @@
 	//E-POST REGISTREERIMINE
 	if (isset ($_POST["signupEmail"])) {
 		if (empty($_POST["signupEmail"])) {
-		$signupEmailError = "* Väli on kohustuslik!";
+		$signupEmailError = "* VÃ¤li on kohustuslik!";
 		} else {
 		$signupEmail = $_POST ["signupEmail"];
 		}
@@ -29,29 +30,29 @@
 	//PAROOL
 	if(isset ($_POST["signupPassword"])) {
 		if (empty ($_POST["signupPassword"])) {
-		$signupPasswordError = "* Väli on kohustuslik!";
+		$signupPasswordError = "* VÃ¤li on kohustuslik!";
 		} else {
 		if (strlen ($_POST["signupPassword"]) <6)
-		$signupPasswordError = "* Parool peab olema vähemalt 6 tähemärkki pikk";
+		$signupPasswordError = "* Parool peab olema vÃ¤hemalt 6 tÃ¤hemÃ¤rkki pikk";
 		}
 	}
 	
 	//Kasutajanimi
 	if (isset ($_POST["signupUsername"])) {
 		if (empty ($_POST["signupUsername"])) {
-		$signupUsernameError = "* Väli on kohustuslik";
+		$signupUsernameError = "* VÃ¤li on kohustuslik";
 		} else {
 		if (strlen ($_POST["signupUsername"]) >20) {
-		$signupUsernameError = "* Kasutajanimi ei tohi olla pikkem kui 20 tähemärkki";
+		$signupUsernameError = "* Kasutajanimi ei tohi olla pikkem kui 20 tÃ¤hemÃ¤rkki";
 		} else {
 		$signupUsername = $_POST ["signupUsername"];
 			}
 		}
 	}
 	
-	//REGISTREERIMISE LÕPP
-	if ( $signupEmailError == "*" AND
-		$signupPasswordError == "*" &&
+	//REGISTREERIMISE LÃ•PP
+	if ( $signupEmailError == "" AND
+		$signupPasswordError == "" &&
 		isset($_POST["signupEmail"]) &&
 		isset($_POST["signupPassword"])
 	)
@@ -69,7 +70,7 @@
 	//EMAIL LOOGIMINE
 	if (isset ($_POST["loginEmail"])) {
 		if (empty ($_POST["loginEmail"])) {
-		$loginEmailError = "* Väli on kohustuslik!";
+		$loginEmailError = "* VÃ¤li on kohustuslik!";
 		} else {
 		$loginEmail = $_POST ["loginEmail"];
 		}
@@ -78,13 +79,13 @@
 	//PAROOLI LOOGIMINE
 	if (isset ($_POST["loginPassword"])) {
 		if (empty ($_POST["loginPassword"])) {
-		$loginPasswordError = "* Väli on kohustuslik!";
+		$loginPasswordError = "* VÃ¤li on kohustuslik!";
 		} else {
 		$loginPassword = $_POST ["loginPassword"];
 		}
 	}
 	
-	//LOOGIMISE LÕPP
+	//LOOGIMISE LÃ•PP
 	if (isset ($_POST["loginEmail"]) &&
 		isset ($_POST["loginPassword"])  &&
 		!empty ($_POST["loginEmail"]) &&
@@ -92,7 +93,7 @@
 		)
 	//LOOGIMINE JA FUNKTSIOON
 	{
-	$error = login($_POST["loginEmail"], $_POST["loginPassword"]); //ERROR näitab et parool vqi email on vale
+	$error = login($_POST["loginEmail"], $_POST["loginPassword"]); //ERROR nÃ¤itab et parool vqi email on vale
 	}
 	
 ?>
@@ -106,14 +107,15 @@
 	</head>
 	
 	<body>
+	<center>
 	<!--KASUTAJA SISENEB-->
 	<h1>Sisene</h1>
-	<p style="color:red;"><?=$error;?></p> <!--näitab parool/email errorit-->
+	<p style="color:red;"><?=$error;?></p> <!--nÃ¤itab parool/email errorit-->
 	<form method="POST">
 		
 		<!--EMAILI LOOGIMINE-->
 		<label for="loginEmail">E-post</label><br>
-		<input name="loginEmail" type="loginEmail">
+		<input name="loginEmail" type="loginEmail" value="<?=$loginEmail;?>">
 		<?php echo $loginEmailError;?>
 		
 		<br><br>
@@ -127,16 +129,16 @@
 		<input type="submit" value="Logi sisse"></br>
 	</form>
 	
-
+	<br><br>
 	<!--KASUTAJA REGISTREERIB-->
 	<h1>Loo kasutaja</h1>
 	<form method="POST">
 	<label></label>
 		
-		<p> * On kohustuslikud</p>
+		
 		<!--EMAIL REGISTREERIMINE-->
 		<label for="signupEmail">E-post</label><br>
-		<input name="signupEmail" type = "signupEmail" placeholder="E-post">
+		<input name="signupEmail" type = "signupEmail" placeholder="E-post" value="<?=$signupEmail;?>">
 		<?php echo $signupEmailError;?>
 		
 		<br>
@@ -144,9 +146,8 @@
 		<!--PAROOL REGISTREERIMINE-->
 		<br><label for="signupPassword">Parool</label></br>
 		<input name="signupPassword" type = "password" placeholder="Parool">
-		<?php echo $signupPasswordError;?>
+		<p style="color:red;"><?php echo $signupPasswordError;?></p>
 		
-		<br>
 		
 		<!--KASUTAJANIMI REGISTREERIMINE-->
 		<br><label for="signupUsername">Sinu kasutaja nimi</label></br>
@@ -158,7 +159,7 @@
 		<!--SUGU REGISTREERIMINE-->
 		<p><label for="signupGender">Sugu:</label><br>
 		<select name = "signupGender"  id="signupGender" required><br><br>
-		<option value="">Näita</option>
+		<option value="">NÃ¤ita</option>
 		<option value="Mees">Mees</option>
 		<option value="Naine">Naine</option>
 		<option value="Muu">Muu</option>
@@ -169,5 +170,6 @@
 	
 		<input type="submit" value="Loo kasutaja"></br>
 	</form>
+	</center>
 	</body>
 </html>
