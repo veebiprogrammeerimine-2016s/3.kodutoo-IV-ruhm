@@ -164,12 +164,15 @@
 
   $songs = getAllSongs($q, $sort, $order);
 
-  /*echo "<pre>";
-  var_dump($songs[5]);
-  echo "</pre>";*/
 
 ?>
 
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pirate radio...arrr, matey!</title>
+	</head>
+  <body>
 
 <h1>Pirate radio</h1>
 <h3>Arrr, matey!</h3>
@@ -382,7 +385,7 @@
               $html .= "<th>
               <a href='?q=".$q."&sort=album&order=".$orderAlbum."'>
 
-              Album ".$arr."
+              Plaat ".$arr."
 
               </a
 
@@ -440,6 +443,8 @@
 
 ?>
 
+</body>
+</html>
 <!--
  <h2>Player test</h2>
 

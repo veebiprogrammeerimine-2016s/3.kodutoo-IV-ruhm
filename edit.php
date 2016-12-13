@@ -28,9 +28,12 @@
 
 ?>
 
+<!DOCTYPE html>
 <html>
+	<head>
+		<title>Muuda infot või kustuta...arrr!</title>
+	</head>
 	<body>
-
 <br>
 <a href="data.php"> Tagasi </a>
 
