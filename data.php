@@ -60,7 +60,7 @@
 ?>
 
 
-<h1>Data</h1>
+<h1>IndieRadio</h1>
 
 <p>
 
@@ -148,6 +148,11 @@
           $html .= "<td>".$s->album."</td>";
           $html .= "<td>".$s->genre."</td>";
           $html .= "<td>".$s->comment."</td>";
+          $html .= "<td>
+  							<a href='edit.php?id=".$s->id."'>
+  							Edit
+  							</a>
+  							</td>";
         $html .= "</tr>";
 
 
