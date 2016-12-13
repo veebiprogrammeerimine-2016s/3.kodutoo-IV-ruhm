@@ -46,7 +46,7 @@
           $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
       		$GLOBALS["database"]);
 
-      		$stmt = $mysqli->prepare("SELECT id, email, password, created
+      		$stmt = $mysqli->prepare("SELECT id, email, password, firstname, created
           FROM user_sample
           WHERE email = ?
           ");
@@ -57,7 +57,7 @@
           $stmt->bind_param("s", $email);
 
           //rea kohta tulba v22rtus
-          $stmt->bind_result($id, $emailFromDb, $passwordFromDb, $created);
+          $stmt->bind_result($id, $emailFromDb, $passwordFromDb, $firstnameFromDb, $created);
 
           $stmt->execute();
 
@@ -72,6 +72,7 @@
 
                 $_SESSION["userId"] = $id;
                 $_SESSION["userEmail"] = $emailFromDb;
+                $_SESSION["userFirstname"] = $firstnameFromDb;
 
                 header("Location: data.php");
                 exit();
@@ -110,40 +111,89 @@
 
         }
 
-        function getAllSongs() {
+        function getAllSongs($q, $sort, $order) {
+
+        $allowedSort = ["id", "author", "artist",
+        "songname", "created", "duration", "album",
+        "genre"];
+
+        if(!in_array ($sort, $allowedSort)) {
+          $sort = "id";
+        }
+
+        $orderBy = "ASC";
+
+
+      if($order == "DESC") {
+        $orderBy = "DESC";
+      }
+
+      //echo "Sorteerin: ".$sort." ".$orderBy." ";
+
+
+
+        if ($q != "") {
+          //otsin
+          //echo "Otsin: ".$q;
 
           $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
           $GLOBALS["database"]);
 
+          $stmt = $mysqli->prepare("
+            SELECT id, author, artist, songname, created, duration, album, genre, comment
+            FROM songregister
+            WHERE deleted IS NULL
+            AND (id LIKE ? OR author LIKE ? OR artist LIKE ? OR songname LIKE ?
+            OR created LIKE ? OR duration LIKE ? OR album LIKE ? OR genre LIKE ?
+            OR comment LIKE ?)
+            ORDER BY $sort $orderBy
+          ");
+
+          $searchWord = "%".$q."%";
+          $stmt->bind_param("sssssssss", $searchWord, $searchWord, $searchWord, $searchWord,
+          $searchWord, $searchWord, $searchWord, $searchWord, $searchWord);
+
+        } else {
+          //ei otsi
+          $mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"],
+          $GLOBALS["database"]);
+
           $stmt = $mysqli->prepare("SELECT id, author, artist, songname, created, duration, album, genre, comment FROM songregister
-          WHERE deleted IS NULL");
-
-          $stmt->bind_result($id, $author, $artist, $songname, $created, $duration, $album, $genre, $comment);
-          $stmt->execute();
-
-          $results = array();
-          //tsykli sisu tehakse nii mitu korda, mitu rida
-          //SQL lausega tuleb
-          while ($stmt->fetch()) {
-
-            $songs = new StdClass();
-            $songs->id = $id;
-            $songs->author = $author;
-            $songs->artist = $artist;
-            $songs->songname = $songname;
-            $songs->created = $created;
-            $songs->duration = $duration;
-            $songs->album = $album;
-            $songs->genre = $genre;
-            $songs->comment = $comment;
-
-            //ec$songsge."<br>";
-            //echo $color."<br>";
-            array_push($results, $songs);
-          }
-
-          return $results;
+          WHERE deleted IS NULL
+          ORDER BY $sort $orderBy
+          ");
         }
+
+        $stmt->bind_result($id, $author, $artist, $songname, $created, $duration, $album, $genre, $comment);
+        $stmt->execute();
+
+        $results = array();
+
+        // tsükli sisu tehakse nii mitu korda, mitu rida
+        // SQL lausega tuleb
+        while ($stmt->fetch()) {
+
+          $songs = new StdClass();
+          $songs->id = $id;
+          $songs->author = $author;
+          $songs->artist = $artist;
+          $songs->songname = $songname;
+          $songs->created = $created;
+          $songs->duration = $duration;
+          $songs->album = $album;
+          $songs->genre = $genre;
+          $songs->comment = $comment;
+
+
+          //echo $color."<br>";
+          array_push($results, $songs);
+
+        }
+
+        return $results;
+
+      }
+
 
         function cleanInput($input) {
 

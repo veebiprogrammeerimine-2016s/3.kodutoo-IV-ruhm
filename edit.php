@@ -13,9 +13,9 @@
 	//kas kasutaja uuendab andmeid
 	if(isset($_POST["update"])){
 
-		updateSong($_POST["id"], $_POST["author"], $_POST["artist"],
-		$_POST["songname"], $_POST["created"], $_POST["duration"],
-		$_POST["album"], $_POST["genre"], $_POST["comment"]);
+		updateSong(cleaninput($_POST["id"]), cleaninput($_POST["author"]), cleaninput($_POST["artist"]),
+		cleaninput($_POST["songname"]), cleaninput($_POST["created"]), cleaninput($_POST["duration"]),
+		cleaninput($_POST["album"]), cleaninput($_POST["genre"]), cleaninput($_POST["comment"]));
 
 		header("Location: edit.php?id=".$_POST["id"]."&success=true");
         exit();
