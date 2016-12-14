@@ -205,7 +205,7 @@
       <br><br>
 
       <label> Loomise aasta </label><br>
-      <input name="created" type="number" value="<?=$created;?>"> <?php echo $createdError; ?>
+      <input name="created" type="year" value="<?=$created;?>"> <?php echo $createdError; ?>
 
       <br><br>
 
