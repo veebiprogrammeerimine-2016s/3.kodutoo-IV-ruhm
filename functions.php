@@ -72,11 +72,11 @@
 		$GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT id, epost, password, gender, username, avatar
+		SELECT id, epost, password, gender, username
 		FROM 3user_food
 		");
 		
-		$stmt->bind_result($id, $email, $password, $gender, $nickname, $avatar);
+		$stmt->bind_result($id, $email, $password, $gender, $nickname);
 		$stmt->execute();
 		$results = array();
 		
@@ -87,7 +87,6 @@
 			$human->email = $email;
 			$human->gender = $gender;
 			$human->nickname = $nickname;
-			$human->avatar = $avatar;
 			
 			array_push($results, $human);	
 		}
@@ -101,5 +100,20 @@
 		$input = htmlspecialchars($input);
 		return $input;
 	}
+	
+	function updatePerson($nickname){
+		$mysqli = new mysqli($GLOBALS["serverHost"],
+		$GLOBALS["serverUsername"],
+		$GLOBALS["serverPassword"],
+		$GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("UPDATE 3user_food SET username=? WHERE id=?");
+		$stmt->bind_param("si", $nickname, $_SESSION["userId"]);
 
+		if($stmt->execute()){
+			echo "salvestus onnestus!";
+		}
+		$stmt->close();
+		$mysqli->close();	
+	}
 ?>
