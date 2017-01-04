@@ -18,7 +18,7 @@
 		$stmt->bind_param("ssss",$email, $password, $nickname, $gender);
 		
 		if ( $stmt->execute() ) {
-			echo "õnnestus";
+			echo "succeeded";
 		} else {
 			echo "ERROR ".$stmt->error;
 		}	
@@ -72,28 +72,27 @@
 		$GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT id, epost, password, gender, username
+		SELECT id, epost, password, username, gender
 		FROM 3user_food
 		");
 		
-		$stmt->bind_result($id, $email, $password, $gender, $nickname);
+		$stmt->bind_result($id, $email, $password, $nickname,$gender);
 		$stmt->execute();
 		$results = array();
 		
 		while ($stmt->fetch()) {
-			
 			$human = new StdClass();
 			$human->id = $id;
 			$human->email = $email;
-			$human->gender = $gender;
 			$human->nickname = $nickname;
-			
+			$human->gender = $gender;
 			array_push($results, $human);	
 		}
 		
 		return $results;
 	}
 	
+	//CleanInput
 	function cleanInput($input) {
 		$input = trim($input);
 		$input = stripslashes($input);
@@ -101,6 +100,7 @@
 		return $input;
 	}
 	
+	//KASUTAJA NIMI UUENDAMINE
 	function updatePerson($nickname){
 		$mysqli = new mysqli($GLOBALS["serverHost"],
 		$GLOBALS["serverUsername"],
@@ -115,5 +115,52 @@
 		}
 		$stmt->close();
 		$mysqli->close();	
+	}
+	
+	//TAGASISIDE
+	function comment($restname, $feedback, $rating) {	
+		$mysqli = new mysqli($GLOBALS["serverHost"],
+		$GLOBALS["serverUsername"],
+		$GLOBALS["serverPassword"],
+		$GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("INSERT INTO 3user_food_rest (kasutaja, restname, feedback, rating) VALUE (?, ?, ?, ?)");
+		echo $mysqli->error;
+		$stmt->bind_param("ssss",$_SESSION["userEmail"], $restname, $feedback, $rating);
+		
+		if ( $stmt->execute() ) {
+			echo "succeeded";
+		} else {
+			echo "ERROR ".$stmt->error;
+		}	
+	}
+	
+	//TAGASISIDE TABEL
+	function restaraunt(){
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"], 
+		$GLOBALS["serverUsername"], 
+		$GLOBALS["serverPassword"], 
+		$GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("
+		SELECT kasutaja, restname, feedback, rating
+		FROM 3user_food_rest
+		");
+		
+		$stmt->bind_result($email, $restname, $feedback, $rating );
+		$stmt->execute();
+		$results = array();
+		
+		while ($stmt->fetch()) {
+			$human = new StdClass();
+			$human->email = $email;
+			$human->restname = $restname;
+			$human->feedback = $feedback;
+			$human->rating =  $rating;
+			array_push($results, $human);	
+		}
+		
+		return $results;
 	}
 ?>

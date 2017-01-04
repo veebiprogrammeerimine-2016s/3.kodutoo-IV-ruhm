@@ -12,7 +12,26 @@
 ?>
 
 <html>
+<head>
+<style>
+table {
+    border-collapse: collapse;
+    width: 50%;
+}
 
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+</style>
+</head>
 Tere tulemast <?=$_SESSION["userEmail"];?>!
 	
 	<form method="POST">
@@ -52,3 +71,4 @@ $html .= "</table>";
 
 echo $html;
 ?>
+
