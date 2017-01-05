@@ -45,36 +45,54 @@
 		!empty ($_POST["feedback"])
 		)
 	
-	//SALVESTAMINE
+	//SALVESTAMINE KOMMENTAARI
 	{
 	comment($companyname, $feedback, $_POST["rating"]);
 	}
-	$people = restaraunt();
+	
+	//SORTEREERIMINE JA OTSING
+	if (isset($_GET["q"])) {
+		$q = $_GET["q"];
+	
+	} else {
+		//otsing ei toimu
+		$q = "";
+	}
+	//Kui midagi pole vajutatud
+	$sort = "kasutaja";
+	$order = "ASC";
+	
+	if (isset($_GET["sort"]) && isset($_GET["order"])) {
+		$sort = $_GET["sort"];
+		$order = $_GET["order"];
+	}
+	
+	$people = restaraunt($q, $sort, $order);
+	
 ?>
 
 <html>
 <body>
 <head>
-<style>
-
-	table {
-		border-collapse: collapse;
-		width: 30%;
-	}
-
-	th, td {
-		text-align: left;
-		padding: 8px;
-	}
-
-	tr:nth-child(even){background-color: #f2f2f2}
-
-	th {
-		background-color: #4CAF50;
-		color: white;
-	}
 	
-</style>
+	<style>
+	
+		table {
+			border-collapse: collapse;
+			width: 30%;}
+
+		th, td {
+			text-align: left;
+			padding: 8px;}
+
+		tr:nth-child(even){background-color: #f2f2f2}
+
+		th {
+			background-color: #4CAF50;
+			color: white;}
+	
+	</style>
+	
 </head>
 Tere tulemast <?=$_SESSION["userEmail"];?>!
 <a href="?logout=1">Logi välja</a>
@@ -109,6 +127,8 @@ Tere tulemast <?=$_SESSION["userEmail"];?>!
 	<br><input type="submit" value="Send your comment"></br>
 	
 	</form>
+	
+	
 </body>
 </html>
 <?php 
@@ -116,15 +136,46 @@ Tere tulemast <?=$_SESSION["userEmail"];?>!
 $html = "<table>";
 	
 	$html .= "<tr>";
-		$html .= "<th>Account</th>";
-		$html .= "<th>Visited</th>";
-		$html .= "<th>Feedback</th>";
-		$html .= "<th>Rating</th>";
+	
+	 //ORDER BY KASUTAJA
+	$orderkasutaja = "ASC";
+	if (isset($_GET["order"]) &&
+		$_GET["order"] == "ASC" &&
+		$_GET["sort"] == "kasutaja"){
+			$orderkasutaja = "DESC";
+		}
+	
+		$html .= "<th><a href='?q=".$q."&sort=kasutaja&order=".$orderkasutaja."'>Kasutaja</a></th>";
+	
+	//ORDER BY VISITED
+	$ordervisited = "ASC";
+	if (isset($_GET["order"]) &&
+		$_GET["order"] == "ASC" &&
+		$_GET["sort"] == "restname")
+		{$ordervisited = "DESC";}
+		$html .= "<th><a href='?q=".$q."&sort=restname&order=".$ordervisited."'>Visited</a></th>";
+	
+	//ORDER BY FEEDBACK
+	$orderfeedback = "ASC";
+	if (isset($_GET["order"]) &&
+		$_GET["order"] == "ASC" &&
+		$_GET["sort"] == "feedback")
+		{$orderfeedback = "DESC";}
+		$html .= "<th><a href='?q=".$q."&sort=feedback&order=".$orderfeedback."'>Feedback</a></th>";
+	
+	//ORDER BY RATING
+	$orderrating = "ASC";
+	if (isset($_GET["order"]) &&
+		$_GET["order"] == "ASC" &&
+		$_GET["sort"] == "rating")
+		{$orderrating = "DESC";}
+		$html .= "<th><a href='?q=".$q."&sort=rating&order=".$orderrating."'>Rating</a></th>";
+	
 	$html .= "</tr>";
-			
+	
 	foreach ($people as $p) {
 	$html .= "<tr>";
-		$html .= "<td>".$p->email."</td>";
+		$html .= "<td>".$p->kasutaja."</td>";
 		$html .= "<td>".$p->restname."</td>";
 		$html .= "<td>".$p->feedback."</td>";
 		$html .= "<td>".$p->rating."</td>";	

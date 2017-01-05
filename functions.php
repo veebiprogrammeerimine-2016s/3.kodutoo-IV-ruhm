@@ -129,32 +129,58 @@
 		$stmt->bind_param("ssss",$_SESSION["userEmail"], $restname, $feedback, $rating);
 		
 		if ( $stmt->execute() ) {
-			echo "succeeded";
 		} else {
 			echo "ERROR ".$stmt->error;
 		}	
 	}
 	
-	//TAGASISIDE TABEL
-	function restaraunt(){
+	//TAGASIDE TABEL
+	function restaraunt($q, $sort, $order){
 		
 		$mysqli = new mysqli($GLOBALS["serverHost"], 
 		$GLOBALS["serverUsername"], 
 		$GLOBALS["serverPassword"], 
 		$GLOBALS["database"]);
 		
-		$stmt = $mysqli->prepare("
-		SELECT kasutaja, restname, feedback, rating
-		FROM 3user_food_rest
-		");
+		$allowedSort = ["kasutaja", "restname", "feedback", "rating"];
 		
-		$stmt->bind_result($email, $restname, $feedback, $rating );
+		if(!in_array($sort, $allowedSort)){$sort = "kasutaja";}
+		
+		$orderBy = "ASC";	
+		
+		if($order == "DESC") {$orderBy = "DESC";}
+		
+			
+		//OTSING
+		if ($q != "") {
+		$stmt = $mysqli->prepare("
+			SELECT kasutaja, restname, feedback, rating
+			FROM 3user_food_rest
+			WHERE deleted IS NULL
+			AND ( restname LIKE ? OR feedback LIKE ? )
+			ORDER BY $sort $orderBy
+			");
+			
+		$searchWord = "%".$q."%";
+		
+		$stmt->bind_param("ss", $searchWord, $searchWord);
+		
+		} else {
+		
+		$stmt = $mysqli->prepare("
+			SELECT kasutaja, restname, feedback, rating 
+			FROM 3user_food_rest
+			ORDER BY $sort $orderBy
+			");
+		}
+		
+		$stmt->bind_result($email, $restname, $feedback, $rating);
 		$stmt->execute();
 		$results = array();
 		
 		while ($stmt->fetch()) {
 			$human = new StdClass();
-			$human->email = $email;
+			$human->kasutaja = $email;
 			$human->restname = $restname;
 			$human->feedback = $feedback;
 			$human->rating =  $rating;

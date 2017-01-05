@@ -3,9 +3,9 @@
 	require("functions.php");
 	
 	if(isset($_POST["update"])){	
-	updatePerson(cleanInput($_POST["nickname"]));
-	header("Location: user_page.php?id=".$_POST["id"]."&success=true");
-    exit();	
+		updatePerson(cleanInput($_POST["nickname"]));
+		header("Location: user_page.php?id=".$_POST["id"]."&success=true");
+		exit();	
 	}
 
 	$people = profile();
@@ -13,25 +13,25 @@
 
 <html>
 <head>
-<style>
-table {
-    border-collapse: collapse;
-    width: 50%;
-}
 
-th, td {
-    text-align: center;
-    padding: 8px;
-}
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 50%;}
 
-tr:nth-child(even){background-color: #f2f2f2}
+		th, td {
+			text-align: center;
+			padding: 8px;}
 
-th {
-    background-color: #4CAF50;
-    color: white;
-}
-</style>
+		tr:nth-child(even){background-color: #f2f2f2}
+
+		th {
+			background-color: #4CAF50;
+			color: white;}
+	</style>
+	
 </head>
+
 Tere tulemast <?=$_SESSION["userEmail"];?>!
 	
 	<form method="POST">
@@ -45,8 +45,11 @@ Tere tulemast <?=$_SESSION["userEmail"];?>!
 	<input type="button" onClick="location.href='HOME_page.php'" style="background-color:#A1D852; color:white;" value="Tagasi">
 	
 	</form>
+	
 <h1>Teised kasutajad</h1>
+
 </html>
+
 <?php 
 //TABELI STRUKTUUR	
 $html = "<table>";
