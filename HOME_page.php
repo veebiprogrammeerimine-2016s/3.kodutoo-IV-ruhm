@@ -1,7 +1,7 @@
 <?php
 	
 	require("functions.php");
-
+	require("style.php");
 	//MUUTUJAD
 	$companyname = $feedback = "";
 	//MUUTUJAD ERROR
@@ -123,9 +123,7 @@ Tere tulemast <?=$_SESSION["userEmail"];?>!
 		<option value="2">2</option>
 		<option value="1">1</option>
 	</select>
-	
 	<br><input type="submit" value="Send your comment"></br>
-	
 	</form>
 	
 	
@@ -186,3 +184,10 @@ $html .= "</table>";
 
 echo $html;
 ?>
+
+<html>
+<form>
+	<input type="search" name="q" value="<?=$q;?>">
+	<input type="submit" value="Otsi">
+</form>
+</html>

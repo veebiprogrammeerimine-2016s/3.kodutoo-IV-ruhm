@@ -15,19 +15,14 @@
 <head>
 
 	<style>
-		table {
-			border-collapse: collapse;
-			width: 50%;}
-
-		th, td {
-			text-align: center;
-			padding: 8px;}
-
-		tr:nth-child(even){background-color: #f2f2f2}
-
-		th {
-			background-color: #4CAF50;
-			color: white;}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;    
+}
 	</style>
 	
 </head>
@@ -45,28 +40,25 @@ Tere tulemast <?=$_SESSION["userEmail"];?>!
 	<input type="button" onClick="location.href='HOME_page.php'" style="background-color:#A1D852; color:white;" value="Tagasi">
 	
 	</form>
-	
-<h1>Teised kasutajad</h1>
-
 </html>
 
 <?php 
 //TABELI STRUKTUUR	
 $html = "<table>";
 	
-	$html .= "<tr>";
-		$html .= "<th>ID</th>";
-		$html .= "<th>Kasutaja</th>";
-		$html .= "<th>Sugu</th>";
-		$html .= "<th>Username</th>";
-	$html .= "</tr>";
-			
 	foreach ($people as $p) {
 	$html .= "<tr>";
-		$html .= "<td>".$p->id."</td>";
+		$html .= "<th>Kasutaja</th>";
+		$html .= "<tr>";
 		$html .= "<td>".$p->email."</td>";
+		$html .= "<tr>";
+		$html .= "<th>Sugu</th>";
+		$html .= "<tr>";
 		$html .= "<td>".$p->gender."</td>";
-		$html .= "<td>".$p->nickname."</td>";	
+		$html .= "<tr>";
+		$html .= "<th>Username</th>";
+		$html .= "<tr>";
+		$html .= "<td>".$p->nickname."</td>";
 	$html .= "</tr>";
 	}
 	

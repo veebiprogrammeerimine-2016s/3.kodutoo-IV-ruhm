@@ -72,17 +72,18 @@
 		$GLOBALS["database"]);
 		
 		$stmt = $mysqli->prepare("
-		SELECT id, epost, password, username, gender
+		SELECT epost, username, gender
 		FROM 3user_food
+		WHERE epost = ?
 		");
 		
-		$stmt->bind_result($id, $email, $password, $nickname,$gender);
+		$stmt->bind_param("s", $_SESSION["userEmail"]);
+		$stmt->bind_result($email, $nickname,$gender);
 		$stmt->execute();
 		$results = array();
 		
 		while ($stmt->fetch()) {
 			$human = new StdClass();
-			$human->id = $id;
 			$human->email = $email;
 			$human->nickname = $nickname;
 			$human->gender = $gender;
@@ -144,11 +145,13 @@
 		
 		$allowedSort = ["kasutaja", "restname", "feedback", "rating"];
 		
-		if(!in_array($sort, $allowedSort)){$sort = "kasutaja";}
+		if(!in_array($sort, $allowedSort)){
+			$sort = "kasutaja";}
 		
 		$orderBy = "ASC";	
 		
-		if($order == "DESC") {$orderBy = "DESC";}
+		if($order == "DESC"){
+			$orderBy = "DESC";}
 		
 			
 		//OTSING
@@ -156,17 +159,16 @@
 		$stmt = $mysqli->prepare("
 			SELECT kasutaja, restname, feedback, rating
 			FROM 3user_food_rest
-			WHERE deleted IS NULL
-			AND ( restname LIKE ? OR feedback LIKE ? )
+			WHERE restname LIKE ? 
+			OR feedback LIKE ?
 			ORDER BY $sort $orderBy
 			");
 			
 		$searchWord = "%".$q."%";
-		
 		$stmt->bind_param("ss", $searchWord, $searchWord);
 		
 		} else {
-		
+		//otsing ei toimu
 		$stmt = $mysqli->prepare("
 			SELECT kasutaja, restname, feedback, rating 
 			FROM 3user_food_rest
