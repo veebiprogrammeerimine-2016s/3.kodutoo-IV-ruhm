@@ -101,74 +101,113 @@
 
 <!DOCTYPE html>
 <html>
-		
-	<head>
+	
+	<style>	
+	
+	.submit {
+		width: 20%;
+		height: 40px;
+		background-color: #AA7CFF;
+		border: none;
+		color: white;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		-webkit-transition-duration: 0.4s; /* Safari */
+		transition-duration: 0.4s;
+		cursor: pointer;
+		border-radius: 12px;
+	}			
+
+	.submit1 {
+		background-color: #AA7CFF; 
+		color: white; 
+	}
+
+	.submit1:hover {
+		background-color: white;
+		color: black;
+		border: 1px solid black;
+	}
+	
+	input[class=text1], select {
+		width: 20%;
+		height: 40px;
+		padding: 12px 20px;
+		margin: 8px 0;
+		display: inline-block;
+		border: 1px solid black;
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
+
+	</style>	
+
+<head>
 	<title>Sisselogimise leht</title>
-	</head>
+</head>
 	
 	<body>
 	<center>
 	<!--KASUTAJA SISENEB-->
-	<h1>Sisene</h1>
+	<h1>Log In</h1>
 	<p style="color:red;"><?=$error;?></p> <!--näitab parool/email errorit-->
 	<form method="POST">
 		
 		<!--EMAILI LOOGIMINE-->
-		<label for="loginEmail">E-post</label><br>
-		<input name="loginEmail" type="loginEmail" value="<?=$loginEmail;?>">
-		<?php echo $loginEmailError;?>
+		<label for="loginEmail">Email</label><br>
+		<input name="loginEmail" class="text1" placeholder="Email" value="<?=$loginEmail;?>">
+		<br><?php echo $loginEmailError;?></br>
 		
-		<br><br>
 		<!--PAROOLI LOOGIMINE-->
-		<label for="loginPassword">Parool</label><br>
-		<input name="loginPassword" type="password">
-		<?php echo $loginPasswordError;?>
+		<label for="loginPassword">Password</label><br>
+		<input name="loginPassword" type="password" class="text1" placeholder="Password">
+		<br><?php echo $loginPasswordError;?></br>
 		
 		<br><br>
 		
-		<input type="submit" value="Logi sisse"></br>
+		<input type="submit" class="submit submit1" value="Logi sisse"></br>
 	</form>
 	
 	<br><br>
 	<!--KASUTAJA REGISTREERIB-->
-	<h1>Loo kasutaja</h1>
+	<h1>Create new user</h1>
 	<form method="POST">
 	<label></label>
 		
 		
 		<!--EMAIL REGISTREERIMINE-->
-		<label for="signupEmail">E-post</label><br>
-		<input name="signupEmail" type = "signupEmail" placeholder="E-post" value="<?=$signupEmail;?>">
-		<?php echo $signupEmailError;?>
+		<label for="signupEmail">Email</label><br>
+		<input name="signupEmail" class="text1" placeholder="Email" value="<?=$signupEmail;?>">
+		<br><?php echo $signupEmailError;?></br>
 		
-		<br>
-		
+
 		<!--PAROOL REGISTREERIMINE-->
-		<br><label for="signupPassword">Parool</label></br>
-		<input name="signupPassword" type = "password" placeholder="Parool">
-		<p style="color:red;"><?php echo $signupPasswordError;?></p>
-		
+		<label for="signupPassword">Password</label><br>
+		<input name="signupPassword" type="password" class="text1" placeholder="Password">
+		<br><?php echo $signupPasswordError;?></p></br>
 		
 		<!--KASUTAJANIMI REGISTREERIMINE-->
-		<br><label for="signupUsername">Sinu kasutaja nimi</label></br>
-		<input name="signupUsername" type = "signupUsername" placeholder="Kasutajanimi" value=<?=$signupUsername;?>>
-		<?php echo $signupUsernameError;?>
+		<label for="signupUsername">Username</label><br>
+		<input name="signupUsername" class="text1"" placeholder="Username" value=<?=$signupUsername;?>>
+		<br><?php echo $signupUsernameError;?></br>
 		
-		<br>
 		
 		<!--SUGU REGISTREERIMINE-->
-		<p><label for="signupGender">Sugu:</label><br>
+		<p><label for="signupGender">Gender:</label><br>
 		<select name = "signupGender"  id="signupGender" required><br><br>
-		<option value="">Näita</option>
-		<option value="Mees">Mees</option>
-		<option value="Naine">Naine</option>
-		<option value="Muu">Muu</option>
+		<option value="">Show</option>
+		<option value="Male">Male</option>
+		<option value="Female">Female</option>
+		<option value="Other">Other</option>
 		</select>
 		
 		
 		<br><br>
 	
-		<input type="submit" value="Loo kasutaja"></br>
+		<input type="submit" class="submit submit1" value="Loo kasutaja"></br>
 	</form>
 	</center>
 	</body>

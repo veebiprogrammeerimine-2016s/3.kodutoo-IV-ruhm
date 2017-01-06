@@ -10,7 +10,7 @@
 	$companynameerror = $feedbackerror = "";
 	
 	//LOGOUT
-	if (isset($_GET["logout"])) {
+		if (isset($_GET["logout"])) {
 		session_destroy();
 		header("Location: MAIN_page.php");
 		exit();
@@ -86,10 +86,10 @@
 		
 		.submit {
 			width: 50%;
+			height: 50px;
 			background-color: #AA7CFF;
 			border: none;
 			color: white;
-			padding: 2% 6%;
 			text-align: center;
 			text-decoration: none;
 			display: inline-block;
