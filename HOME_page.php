@@ -38,14 +38,33 @@
 
 <html>
 <head>
-	
 	<style>
+	
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			background-color: white;
+		}
 
-			
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border: 1px solid white;
+		}
+
+		tr:nth-child(even){
+			background-color: black;
+			color:white;
+		}
+
+		th {
+			background-color: #AA7CFF;
+			color: black;
+		}
+	
 		body {
 			margin: 0;
 			background-color: black;
-			color: white;
 			}
 		
 		ul {
@@ -59,17 +78,11 @@
 			overflow: auto;
 		}
 
-
 		li a {
 			display: block;
 			color: #000;
 			padding: 12px 4px;
 			text-decoration: none;
-		}
-
-		li a.active {
-			background-color: black;
-			color: white;
 		}
 
 		li a:hover:not(.active) {
@@ -78,25 +91,68 @@
 		}
 		
 		input[type=text] {
-		width: 100%;
-		box-sizing: border-box;
-		border: 2px solid black;
-		border-radius: 4px;
-		font-size: 16px;
-		background-color: white;
-		background-image: url('img/searchbutton.png');
-		background-position: 4px 6px; 
-		background-repeat: no-repeat;
-		padding: 12px 20px 12px 40px;
+			width: 100%;
+			box-sizing: border-box;
+			border: 2px solid black;
+			border-radius: 4px;
+			font-size: 16px;
+			background-color: white;
+			background-image: url('img/searchbutton.png');
+			background-position: 4px 6px; 
+			background-repeat: no-repeat;
+			padding: 12px 20px 12px 40px;
 		}
-
-	</style>
+		
+		h2 {
+			font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+			font-size: 24px;
+			font-style: normal;
+			font-variant: normal;
+			font-weight: 500;
+			line-height: 26.4px;
+			color: white;
+		}
+		
+		h1 {
+			font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+			font-size: 24px;
+			font-style: normal;
+			font-variant: normal;
+			font-weight: 500;
+			line-height: 26.4px;
+			color: white;
+		}
+		
+		h3 {
+			font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+			font-size: 14px;
+			font-style: normal;
+			font-variant: normal;
+			font-weight: 500;
+			line-height: 15.4px;
+			color: white;
+		}
+		
+		p {
+			font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+			font-size: 14px;
+			font-style: normal;
+			font-variant: normal;
+			font-weight: 400;
+			line-height: 20px;
+		}
+		
+		a {
+		color: white;
+		}
 	
+	</style>
 </head>
+
 <body>
 	
 	<ul>
-		<li><a class="active" href="HOME_page.php"> <img src="img/home.png"> Home </a></li>
+		<li><a href="HOME_page.php"> <img src="img/home.png"> Home </a></li>
 		<li><a href="newtred.php"> <img src="img/newtred.png"> New post </a></li>
 		<li><a href="user_page.php"> <img src="img/account.png"> My account </a></li>
 		<li><a href="?logout=1"> <img src="img/logout.png"> Log out</a></li>
@@ -106,7 +162,8 @@
 		</form>
 	</ul>
 	
-<center>
+<div style="margin-left:25%;padding:1px 16px;height:1000px;">
+
 <?php 
 //TABELI STRUKTUUR	
 $html = "<table>";
@@ -159,8 +216,10 @@ $html = "<table>";
 	}
 	
 $html .= "</table>";
+
 echo $html;
 ?>
-</center>
+
+</div>
 </body>
 </html>

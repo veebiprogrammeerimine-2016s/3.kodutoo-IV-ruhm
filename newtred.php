@@ -45,7 +45,9 @@
 <!DOCTYPE html>
 
 <html>
-<style>
+<head>
+	<style>
+
 		body {
 			margin: 0;
 			background-color: black;
@@ -68,11 +70,6 @@
 			color: #000;
 			padding: 12px 4px;
 			text-decoration: none;
-		}
-
-		li a.active {
-			background-color: black;
-			color: white;
 		}
 
 		li a:hover:not(.active) {
@@ -156,12 +153,13 @@
 			box-sizing: border-box;
 		}
 
-</style>
+	</style>
+</head>
 
 <body>
 
 	<ul>
-		<li><a class="active" href="HOME_page.php"> <img src="img/home.png"> Home </a></li>
+		<li><a href="HOME_page.php"> <img src="img/home.png"> Home </a></li>
 		<li><a href="newtred.php"> <img src="img/newtred.png"> New post </a></li>
 		<li><a href="user_page.php"> <img src="img/account.png"> My account </a></li>
 		<li><a href="?logout=1"> <img src="img/logout.png"> Log out</a></li>
@@ -198,5 +196,5 @@
 	</form>
 </div>
 
-<body>
+</body>
 </html>

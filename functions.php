@@ -161,11 +161,13 @@
 			FROM 3user_food_rest
 			WHERE restname LIKE ? 
 			OR feedback LIKE ?
+			OR rating LIKE ?
+			OR kasutaja LIKE ?
 			ORDER BY $sort $orderBy
 			");
 			
 		$searchWord = "%".$q."%";
-		$stmt->bind_param("ss", $searchWord, $searchWord);
+		$stmt->bind_param("ssss", $searchWord, $searchWord, $searchWord, $searchWord );
 		
 		} else {
 		//otsing ei toimu
