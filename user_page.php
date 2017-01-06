@@ -1,30 +1,63 @@
 <?php
 	
 	require("functions.php");
+	require("style.php");
 	
 	if(isset($_POST["update"])){	
 		updatePerson(cleanInput($_POST["nickname"]));
 		header("Location: user_page.php?id=".$_POST["id"]."&success=true");
 		exit();	
 	}
-
 	$people = profile();
 ?>
 
 <html>
 <head>
 
-	<style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 5px;
-    text-align: left;    
-}
+<style>
+		body {
+			margin: 0;
+			background-color: black;
+			color: white;
+			}
+		
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			width: 25%;
+			background-color: white;
+			position: fixed;
+			height: 100%;
+			overflow: auto;
+		}
+
+
+		li a {
+			display: block;
+			color: #000;
+			padding: 12px 4px;
+			text-decoration: none;
+		}
+
+		li a.active {
+			background-color: black;
+			color: white;
+		}
+
+		li a:hover:not(.active) {
+			background-color: #AA7CFF;
+			color: white;
+		}
 	</style>
+<body>
 	
+	<ul>
+		<li><a class="active" href="HOME_page.php"> <img src="img/home.png"> Home </a></li>
+		<li><a href="newtred.php"> <img src="img/newtred.png"> New post </a></li>
+		<li><a href="user_page.php"> <img src="img/account.png"> My account </a></li>
+		<li><a href="?logout=1"> <img src="img/logout.png"> Log out</a></li>
+	</ul>
 </head>
 
 Tere tulemast <?=$_SESSION["userEmail"];?>!
@@ -37,11 +70,9 @@ Tere tulemast <?=$_SESSION["userEmail"];?>!
 	<input name="nickname" type = "nickname" placeholder="username">
 	<input type="submit" name="update" value="Uuenda">
 	<br><br>
-	<input type="button" onClick="location.href='HOME_page.php'" style="background-color:#A1D852; color:white;" value="Tagasi">
 	
 	</form>
-</html>
-
+<center>
 <?php 
 //TABELI STRUKTUUR	
 $html = "<table>";
@@ -63,7 +94,10 @@ $html = "<table>";
 	}
 	
 $html .= "</table>";
-
 echo $html;
 ?>
+</center>´
+</html>
+</body>
+
 
