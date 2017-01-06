@@ -3,6 +3,14 @@
 	require("functions.php");
 	require("style.php");
 
+	//LOGOUT
+	if (isset($_GET["logout"])) {
+		session_destroy();
+		header("Location: MAIN_page.php");
+		exit();
+	}
+	
+	//UPDATING
 	if(isset($_POST["update"])){	
 		updatePerson(cleanInput($_POST["nickname"]));
 		header("Location: user_page.php?id=".$_POST["id"]."&success=true");

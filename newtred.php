@@ -9,6 +9,13 @@
 	//MUUTUJAD ERROR
 	$companynameerror = $feedbackerror = "";
 	
+	//LOGOUT
+	if (isset($_GET["logout"])) {
+		session_destroy();
+		header("Location: MAIN_page.php");
+		exit();
+	}
+	
 	//TAGASISIDE KOMMENTAAR
 	//RESTARAUNT/CAFE NAME
 	if (isset ($_POST["companyname"])) {
