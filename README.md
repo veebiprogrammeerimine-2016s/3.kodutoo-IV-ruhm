@@ -1,4 +1,4 @@
-# 3. kodutoo (IV rühm)
+# 3. kodutoo (II rühm)
 
 ## Kirjeldus
 1. Lähtu ülesannete puhul alati oma ideest ning ole loominguline
