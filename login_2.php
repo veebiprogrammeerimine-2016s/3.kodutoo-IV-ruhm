@@ -123,5 +123,4 @@ require("functions_2.php");
 
 	</form>
 
-</body>
-</html>
+<?php require("footer.php"); ?>

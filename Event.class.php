@@ -5,11 +5,11 @@ class Event {
 	//käivitatakse siis, kui functions.php-s öeldakse new User, siis see jõuab siia
 	function __construct($mysqli){
 		// $this viitab selle classi muutujale
-	
+
 		$this->connection = $mysqli;
 	}
 	
-function saveEvent($place, $duration, $end_duration) 
+	function saveEvent($place, $duration, $end_duration) 
 	{
 		$stmt = $this->connection->prepare("
 			INSERT INTO duration (user_id, place, duration, end_duration) 
@@ -24,20 +24,48 @@ function saveEvent($place, $duration, $end_duration)
 		}
 	}
 
+function getAllPlayers ($q, $sort, $order){
 
-function getAllPlayers ()
-	{
+$allowedSort = ["duration", "end_duration"];
+	if(!in_array($sort, $allowedSort)) {
+		$sort = "duration";
+	}
+
+	$orderBy = "ASC";
+
+	if ($order == "DESC")	{
+		$orderBy = "DESC";
+	}
+	echo "sorteerin: ".$sort." ".$orderBy." ";
+
+	if($q !="") {
 		$stmt = $this->connection->prepare("
-			SELECT place, duration, end_duration
+			SELECT id, place, duration, end_duration
 			FROM duration
+			WHERE deleted IS NULL
+			AND ( duration LIKE ? OR end_duration LIKE ?)
+			ORDER BY $sort $orderBy
 			");
 
-		$stmt->bind_result($place, $duration, $end_duration);
+			$searchWord = "%".$q."%";
+			$stmt->bind_param("ss", $searchWord, $searchWord);
+
+		}	else {
+			$stmt = $this->connection->prepare("
+			SELECT id, place, duration, end_duration
+			FROM duration
+			WHERE deleted IS NULL
+			ORDER BY $sort $orderBy
+			");
+		}
+		
+		$stmt->bind_result($id, $place, $duration, $end_duration);
 		$stmt->execute();
 
 		$results = array();
 		while ($stmt->fetch())	{
 			$player = new StdClass();
+			$player->id =$id;
 			$player->place = $place;
 			$player->duration = $duration;
 			$player->end_duration = $end_duration;
@@ -47,18 +75,65 @@ function getAllPlayers ()
 		return $results;
 	}
 
-/*function getSinglePerosonData($edit_id){
-    
-        $database = "if16_thetloff";
+
+
+/*	function getAllPlayers (){
+
+		$stmt = $this->connection->prepare("
+			SELECT id, place, duration, end_duration
+			FROM duration
+			WHERE deleted IS NULL
+			");
+
+		$stmt->bind_result($id, $place, $duration, $end_duration);
+		$stmt->execute();
+
+		$results = array();
+		while ($stmt->fetch())	{
+			$player = new StdClass();
+			$player->id =$id;
+			$player->place = $place;
+			$player->duration = $duration;
+			$player->end_duration = $end_duration;
+
+			array_push($results, $player);
+		}
+		return $results;
+	}*/
+
+
+	function updatePerson($id, $place, $duration, $end_duration){
+
+		$stmt = $this->connection->prepare("
+			
+			UPDATE duration
+			SET place=?, duration=?, end_duration=?
+			WHERE id=? AND deleted IS NULL
+			");
+
+		$stmt->bind_param("sssi", $place, $duration, $end_duration, $id);
+
+		if($stmt->execute()){
+			echo "andmete muutmine õnnestus";
+		}
+
+		$stmt->close();
+		
+	}
+
+
+	function getSinglePersonData($edit_id){
+
+		$database = "if16_thetloff";
 		//echo "id on ".$edit_id;
 		
 		$stmt = $this->connection->prepare("
-			SELECT age, color 
-			FROM whistle 
+			SELECT id, place, duration, end_duration
+			FROM duration
 			WHERE id=? AND deleted IS NULL");
 
 		$stmt->bind_param("i", $edit_id);
-		$stmt->bind_result($age, $color);
+		$stmt->bind_result($id, $place, $duration, $end_duration);
 		$stmt->execute();
 		
 		//tekitan objekti
@@ -67,12 +142,14 @@ function getAllPlayers ()
 		//saime ühe rea andmeid
 		if($stmt->fetch()){
 			// saan siin alles kasutada bind_result muutujaid
-			$p->age = $age;
-			$p->color = $color;
+			$p->id = $id;
+			$p->place = $place;
+			$p->duration = $duration;
+			$p->end_duration = $end_duration;
 			
 			
 		}else{
-			header("Location: data.php");
+			header("Location: data_2.php");
 			exit();
 		}
 		
@@ -82,33 +159,15 @@ function getAllPlayers ()
 		
 	}
 
-	function updatePerson($id, $age, $color){
-    	
-        $database = "if16_thetloff";
-		
-		$stmt = $this->connection->prepare("
-			UPDATE whistle 
-			SET age=?, color=? 
-			WHERE id=? AND deleted IS NULL");
-		$stmt->bind_param("isi",$age, $color, $id);
-		
-		// kas õnnestus salvestada
-		if($stmt->execute()){
-			// õnnestus
-			echo "salvestus õnnestus!";
-		}
-		
-		$stmt->close();
-		
-	}
+	
 	
 	function deletePerson($id){
-    	
-        $database = "if16_thetloff";
+
+		$database = "if16_thetloff";
 
 		$stmt = $this->connection->prepare("
-			UPDATE whistle 
-			SET deleted=NOW() 
+			UPDATE duration 
+			SET deleted=CURRENT_DATE() 
 			WHERE id=? AND deleted IS NULL");
 		$stmt->bind_param("i", $id);
 		
@@ -120,7 +179,7 @@ function getAllPlayers ()
 		
 		$stmt->close();
 		
-	}*/
+	}
 
 
 }
